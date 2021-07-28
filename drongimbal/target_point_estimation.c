@@ -14,12 +14,11 @@ float f32GimbalPitch_rad, f32GimbalYaw_rad;
 float f32Ratio;
 tVector3_1 tGimbalDirection_Vec;
 float f32GimbalDirection_Vec_Norm;
-
 float f32DroneXposition_m, f32DroneYposition_m, f32DroneAltitude_m;
 float f32GimbalDirectionYaw_rad, f32GimbalDirectionAngle_rad;
 float f32TargetXYlength_m;
 float f32TargetX_m, f32TargetY_m;
-float f32TargetX1_m, f32TargetY1_m;
+//float f32TargetX1_m, f32TargetY1_m;
 int main() {
     f32DroneYaw_rad = 10.0 * 3.141592 / 180.0;
     f32DronePitch_rad = 10.0 * 3.141592 / 180.0;
@@ -33,11 +32,11 @@ int main() {
   
 
     find_Gimbal_Direction();
-    f32TargetX1_m = tGimbalDirection_Vec.f32Val[0][0] * f32Ratio + f32DroneXposition_m;
-    f32TargetY1_m = tGimbalDirection_Vec.f32Val[1][0] * f32Ratio + f32DroneXposition_m;
+    f32TargetX_m = tGimbalDirection_Vec.f32Val[0][0] * f32Ratio + f32DroneXposition_m;
+    f32TargetY_m = tGimbalDirection_Vec.f32Val[1][0] * f32Ratio + f32DroneYposition_m;
     f32TargetXYlength_m = tanf(f32GimbalDirectionAngle_rad) * f32DroneAltitude_m;
-    f32TargetX_m = f32TargetXYlength_m * cosf(f32GimbalDirectionYaw_rad) + f32DroneXposition_m;
-    f32TargetY_m = f32TargetXYlength_m * sinf(f32GimbalDirectionYaw_rad) + f32DroneYposition_m;
+    //f32TargetX_m = f32TargetXYlength_m * cosf(f32GimbalDirectionYaw_rad) + f32DroneXposition_m;
+    //f32TargetY_m = f32TargetXYlength_m * sinf(f32GimbalDirectionYaw_rad) + f32DroneYposition_m;
 }
    
 void find_Gimbal_Direction() {
@@ -71,13 +70,13 @@ void find_Gimbal_Direction() {
     /// Gimbal_Direction_Vec_Norm must be 1.0;
     /// Gimbal_Z_direc must be positive number, because Gimbal maybe look down
     /// if error,DO NOT update about Gimbal Direction Yaw & Angle
-    if (f32GimbalDirection_Vec_Norm < 1.1 && f32GimbalDirection_Vec_Norm > 0.9) {
+   /* if (f32GimbalDirection_Vec_Norm < 1.1 && f32GimbalDirection_Vec_Norm > 0.9) {
         if (Gimbal_Z_direc > 0.0) {
             Gimbal_XY_length = sqrtf(powf(Gimbal_X_direc, 2.0) + powf(Gimbal_Y_direc, 2.0));
             f32GimbalDirectionAngle_rad = atan2f(Gimbal_XY_length, Gimbal_Z_direc);
             f32GimbalDirectionYaw_rad = atan2f(Gimbal_Y_direc, Gimbal_X_direc);
         }
-    }
+    }*/
 }
 
 int32_t vector_addition3_1(tVector3_1* tInput1, tVector3_1* tInput2, tVector3_1* tVector_add) {
