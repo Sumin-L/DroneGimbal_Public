@@ -25,18 +25,13 @@ int main() {
     f32DroneRoll_rad = 15.0 * 3.141592 / 180.0;
     f32GimbalYaw_rad = 20.0 * 3.141592 / 180.0;
     f32GimbalPitch_rad = -30.0 * 3.141592 / 180.0;
-    f32DroneXposition_m = 0.0;
-    f32DroneYposition_m = 0.0;
-    f32DroneAltitude_m = 80;
-
-  
+    f32DroneXposition_m = 153.0;
+    f32DroneYposition_m = 21.0;
+    f32DroneAltitude_m = 80;    
 
     find_Gimbal_Direction();
     f32TargetX_m = tGimbalDirection_Vec.f32Val[0][0] * f32Ratio + f32DroneXposition_m;
-    f32TargetY_m = tGimbalDirection_Vec.f32Val[1][0] * f32Ratio + f32DroneYposition_m;
-    f32TargetXYlength_m = tanf(f32GimbalDirectionAngle_rad) * f32DroneAltitude_m;
-    //f32TargetX_m = f32TargetXYlength_m * cosf(f32GimbalDirectionYaw_rad) + f32DroneXposition_m;
-    //f32TargetY_m = f32TargetXYlength_m * sinf(f32GimbalDirectionYaw_rad) + f32DroneYposition_m;
+    f32TargetY_m = tGimbalDirection_Vec.f32Val[1][0] * f32Ratio + f32DroneYposition_m;    
 }
    
 void find_Gimbal_Direction() {
@@ -63,20 +58,8 @@ void find_Gimbal_Direction() {
     f32GimbalDirection_Vec_Norm = vector_Euclid_norm3_1(&tGimbalDirection_Vec);
     Gimbal_X_direc = tGimbalDirection_Vec.f32Val[0][0];
     Gimbal_Y_direc = tGimbalDirection_Vec.f32Val[1][0];
-    Gimbal_Z_direc = tGimbalDirection_Vec.f32Val[2][0];
-
-  
-    f32Ratio = f32DroneAltitude_m / Gimbal_Z_direc;
-    /// Gimbal_Direction_Vec_Norm must be 1.0;
-    /// Gimbal_Z_direc must be positive number, because Gimbal maybe look down
-    /// if error,DO NOT update about Gimbal Direction Yaw & Angle
-   /* if (f32GimbalDirection_Vec_Norm < 1.1 && f32GimbalDirection_Vec_Norm > 0.9) {
-        if (Gimbal_Z_direc > 0.0) {
-            Gimbal_XY_length = sqrtf(powf(Gimbal_X_direc, 2.0) + powf(Gimbal_Y_direc, 2.0));
-            f32GimbalDirectionAngle_rad = atan2f(Gimbal_XY_length, Gimbal_Z_direc);
-            f32GimbalDirectionYaw_rad = atan2f(Gimbal_Y_direc, Gimbal_X_direc);
-        }
-    }*/
+    Gimbal_Z_direc = tGimbalDirection_Vec.f32Val[2][0];  
+    f32Ratio = f32DroneAltitude_m / Gimbal_Z_direc;  
 }
 
 int32_t vector_addition3_1(tVector3_1* tInput1, tVector3_1* tInput2, tVector3_1* tVector_add) {
@@ -233,13 +216,4 @@ void Roll_X_Rotation_Mat(float RollAngle_rad, tMatrix3_3* x_Rotation_Mat) {
     x_Rotation_Mat->f32Val[2][0] = 0.0;
     x_Rotation_Mat->f32Val[2][1] = sinf(RollAngle_rad);
     x_Rotation_Mat->f32Val[2][2] = cosf(RollAngle_rad);
-}
-void Inv_Rotation_Mat(tMatrix3_3* Rotation_Mat, tMatrix3_3* inv_Rot_Mat) {
-    int32_t vectorRow, vectorCol;
-    /// Same to make transpose matrix
-    for (vectorRow = 0; vectorRow < 3; vectorRow++) {
-        for (vectorCol = 0; vectorCol < 3; vectorCol++) {
-            inv_Rot_Mat->f32Val[vectorCol][vectorRow] = Rotation_Mat->f32Val[vectorRow][vectorCol];
-        }
-    }
 }
