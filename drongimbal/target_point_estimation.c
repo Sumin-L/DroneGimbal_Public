@@ -39,26 +39,7 @@ int main() {
     f32TargetX_m = f32TargetXYlength_m * cosf(f32GimbalDirectionYaw_rad) + f32DroneXposition_m;
     f32TargetY_m = f32TargetXYlength_m * sinf(f32GimbalDirectionYaw_rad) + f32DroneYposition_m;
 }
-    /*void main_target_point_estimation() {
-        f32DroneYaw_rad = 10.0 * 3.141592 / 180.0;
-        f32DronePitch_rad = 10.0 * 3.141592 / 180.0;
-        f32DroneRoll_rad = 15.0 * 3.141592 / 180.0;
-        f32GimbalYaw_rad = 20.0 * 3.141592 / 180.0;
-        f32GimbalPitch_rad = -0.5249;
-        f32DroneXposition_m = 0.0;
-        f32DroneYposition_m = 0.0;
-        f32DroneAltitude_m = 80;
-
-
-
-
-        find_Gimbal_Direction();
-        f32TargetXYlength_m = tanf(f32GimbalDirectionAngle_rad) * f32DroneAltitude_m;
-        f32TargetX_m = f32TargetXYlength_m * cosf(f32GimbalDirectionYaw_rad) + f32DroneXposition_m;
-        f32TargetY_m = f32TargetXYlength_m * sinf(f32GimbalDirectionYaw_rad) + f32DroneYposition_m;
-
-    }*/
-
+   
 void find_Gimbal_Direction() {
     tVector3_1 X_basis_vec; /// Gimbal coordinate X basis vector
     X_basis_vec.f32Val[0][0] = 1.0;
